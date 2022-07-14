@@ -9,6 +9,7 @@ public class LoadingScene : BaseScene
     public Button LoginButton;
     public Button OpenSpaceButton;
     public Button PersonalWorldButton;
+    public GameObject NetworkManager;
     protected override void Init()
     {
         base.Init();
@@ -27,6 +28,7 @@ public class LoadingScene : BaseScene
         {
             PersonalWorldButton.gameObject.SetActive(true);
             OpenSpaceButton.gameObject.SetActive(true);
+            NetworkManager.SetActive(true);
         }
 
     }
