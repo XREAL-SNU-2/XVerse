@@ -491,8 +491,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1809373194}
-        m_TargetAssemblyTypeName: LoginScene, Assembly-CSharp
-        m_MethodName: ToPersonal
+        m_TargetAssemblyTypeName: Xverse.Scene.BaseScene, Assembly-CSharp
+        m_MethodName: ToLoadingScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

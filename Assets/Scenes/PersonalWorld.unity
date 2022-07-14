@@ -588,8 +588,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 516419383}
-        m_TargetAssemblyTypeName: PersonalWorldScene, Assembly-CSharp
-        m_MethodName: ToOpenSpace
+        m_TargetAssemblyTypeName: Xverse.Scene.BaseScene, Assembly-CSharp
+        m_MethodName: ToLoadingScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -9,6 +9,7 @@ namespace Xverse.Scene
     {
     Default,
     Login,
+    Loading,
     PersonalWorld,
     OpenSpace,
     }
@@ -25,5 +26,9 @@ namespace Xverse.Scene
         }
 
         public abstract void Clear();
+        public void ToLoadingScene()
+        {
+            SceneManagerEx.Instance.LoadScene(Scene.Loading);
+        }
     }
 }
