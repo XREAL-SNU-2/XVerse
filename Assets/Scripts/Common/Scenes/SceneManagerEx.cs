@@ -6,6 +6,21 @@ using Xverse.Scene;
 
 public class SceneManagerEx : MonoBehaviour
 {
+    private static SceneManagerEx instance = null;
+    private static readonly object padlock = new object();
+    SceneManagerEx() { }
+    public static SceneManagerEx Instance
+    {
+        get
+        {
+            lock (padlock)
+            {
+                if (instance is null)
+                    instance = new SceneManagerEx();
+            }
+            return instance;
+        }
+    }
     public BaseScene CurrentScene { get { return GameObject.FindObjectOfType<BaseScene>(); } }
     string GetSceneName(Xverse.Scene.Scene type)
     {
