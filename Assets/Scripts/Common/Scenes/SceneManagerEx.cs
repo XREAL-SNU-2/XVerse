@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Xverse.Scene;
 
-public class SceneManagerEx : MonoBehaviour
+public class SceneManagerEx
 {
     private static SceneManagerEx instance = null;
     private static readonly object padlock = new object();
-    SceneManagerEx() { }
     public static SceneManagerEx Instance
     {
         get
@@ -33,15 +32,5 @@ public class SceneManagerEx : MonoBehaviour
     {
         PrevScene = CurrentScene.SceneType;
         SceneManager.LoadScene(GetSceneName(type));
-    }
-
-
-    public void LoadPersonal() // erase later
-    {
-        LoadScene(Xverse.Scene.Scene.PersonalWorld);
-    }
-    public void LoadOpen() // erase later
-    {
-        LoadScene(Xverse.Scene.Scene.OpenSpace);
     }
 }

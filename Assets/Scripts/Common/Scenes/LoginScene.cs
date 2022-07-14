@@ -15,4 +15,8 @@ public class LoginScene : BaseScene
     {
 
     }
+    public void ToPersonal()
+    {
+        SceneManagerEx.Instance.LoadScene(Xverse.Scene.Scene.PersonalWorld);
+    }
 }
