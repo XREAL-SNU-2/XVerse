@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -31,7 +32,6 @@ public class XVerseWeb
                 using (UnityWebRequest request = UnityWebRequest.Get(URL))
                 {
                     yield return request.SendWebRequest();
-
                     // process result
                     if (request.result == UnityWebRequest.Result.Success)
                     {
@@ -94,7 +94,97 @@ public class XVerseWeb
         //request.SetRequestHeader("Connection", "keep-alive");
     }
 
+    /// <summary>
+    /// This returns a UnityWebRequest created from the data you've provided.
+    /// </summary>
+    /// <param name="URL"></param>
+    /// <param name="type">use XVerseRequestTypes</param>
+    /// <param name="formData">for POST: key1, value1, key2, value2, .... must be strings.</param>
+    /// <returns></returns>
+    public static UnityWebRequest MakeWebRequest(string URL, XVerseRequestTypes type, params string[] formData)
+    {
+        switch (type)
+        {
+            case XVerseRequestTypes.GET:
+                return UnityWebRequest.Get(URL);
+            case XVerseRequestTypes.POST:
+                WWWForm form = ParseFormParameters(formData);
+                return UnityWebRequest.Post(URL, form);
+        }
+        return null;
+    }
 
+
+    public static IEnumerator MakeSignedWebRequest(string URL, XVerseRequestTypes type,
+        Action<ResponseData> successHandler, Action<FailResponseData> failHandler = null, params string[] formData)
+    {
+        Task<string> getTokenTask = XVerseFirebase.Instance.GetUserToken();
+        getTokenTask.RunSynchronously();
+
+        switch (type)
+        {
+            case XVerseRequestTypes.GET:
+                using (UnityWebRequest request = UnityWebRequest.Get(URL))
+                {
+                    request.SetRequestHeader("FIREBASE_TOKEN", getTokenTask.Result);
+                    Debug.Log(request.GetRequestHeader("FIREBASE_TOKEN"));
+                    yield return request.SendWebRequest();
+                    // process result
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        // successful
+                        ResponseData data = new ResponseData();
+                        data.Data = request.downloadHandler.data;
+                        data.Length = request.downloadedBytes;
+                        data.ResponseCode = request.responseCode;
+                        successHandler(data);
+                    }
+                    else if (request.result == UnityWebRequest.Result.ConnectionError ||
+                        request.result == UnityWebRequest.Result.ProtocolError ||
+                        request.result == UnityWebRequest.Result.DataProcessingError)
+                    {
+                        // failed
+                        FailResponseData data = new FailResponseData();
+                        data.ResponseCode = request.responseCode;
+                        data.Message = request.error;
+                        failHandler(data);
+                    }
+                    else throw new ArgumentException("encountered unexpected error");
+                }
+                break;
+
+            case XVerseRequestTypes.POST:
+                WWWForm form = ParseFormParameters(formData);
+                using (UnityWebRequest request = UnityWebRequest.Post(URL, form))
+                {
+                    yield return request.SendWebRequest();
+
+                    // process result
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        // successful
+                        ResponseData data = new ResponseData();
+                        data.Data = request.downloadHandler.data;
+                        data.Length = request.downloadedBytes;
+                        data.ResponseCode = request.responseCode;
+                        successHandler(data);
+                    }
+                    else if (request.result == UnityWebRequest.Result.ConnectionError ||
+                        request.result == UnityWebRequest.Result.ProtocolError ||
+                        request.result == UnityWebRequest.Result.DataProcessingError)
+                    {
+                        // failed
+                        FailResponseData data = new FailResponseData();
+                        data.ResponseCode = request.responseCode;
+                        data.Message = request.error;
+                        failHandler(data);
+                    }
+                    else throw new ArgumentException("encountered unexpected error");
+                }
+                break;
+
+        }
+    }
     protected static WWWForm ParseFormParameters(string[] parameters)
     {
         
@@ -158,24 +248,15 @@ public class XVerseWeb
         }
     }
 
-    private void Start()
+    public static void Start()
     {
-        /*
-        StartCoroutine(WebRequest("http://localhost:3000/", XVerseRequestTypes.GET,
-            (data) =>
-            {
-                Debug.Log($"RESPONSE code:{data.ResponseCode}, length:{data.Length}");
-                Debug.Log($"RESPONSE BODY ---------------- ");
-                Debug.Log(Encoding.UTF8.GetString(data.Data));
-            },
-            (data) =>
-            {
-                Debug.Log($"RESPONSE FAIL code:{data.ResponseCode}, message:{data.Message}");
-            }));
-        */
+        string token = XVerseFirebase.Instance.GetUserToken().Result;
+        Debug.Log("token: " + token);
 
         
     }
+
+    public const string XVerseServiceEndPoint = "http://ec2-13-209-4-26.ap-northeast-2.compute.amazonaws.com:3000";
 }
 
 public class ResponseData

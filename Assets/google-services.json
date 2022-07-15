@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "147863947735",
+    "project_id": "xverse-9fe5f",
+    "storage_bucket": "xverse-9fe5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147863947735:android:4c0e75d152b8d476c7e392",
+        "android_client_info": {
+          "package_name": "com.XReal.XVerseDemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147863947735-fmdi0vhhdc4334rdkgj651jm4ile4oh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWne-51AIyLu_Qi6U-h7T63nWzEIoJswE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147863947735-fmdi0vhhdc4334rdkgj651jm4ile4oh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
