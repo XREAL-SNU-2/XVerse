@@ -10,7 +10,6 @@ namespace XVerse.Player.Input
     public class XInputEditor : Editor
     {
         private static float lineHeight = EditorGUIUtility.singleLineHeight;
-
         private ReorderableList inputSettingList;
 
         [MenuItem("Assets/Open XInput")]
@@ -59,6 +58,7 @@ namespace XVerse.Player.Input
             EditorGUI.EndDisabledGroup();
             GUILayout.Space(5);
             inputSettingList.DoLayoutList();
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }
