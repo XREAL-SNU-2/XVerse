@@ -11,3 +11,4 @@
 *.meta -merge eol=lf
 *.controller -merge eol=lf
 *.spriteatlas -merge eol=lf
+*.bundle filter=lfs diff=lfs merge=lfs -text

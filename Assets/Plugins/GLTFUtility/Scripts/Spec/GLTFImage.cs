@@ -61,7 +61,7 @@ namespace Siccity.GLTFUtility {
 
 						if (onProgress != null) onProgress(1f);
 
-						if (uwr.isNetworkError || uwr.isHttpError) {
+						if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError) {
 							Debug.LogError("GLTFImage.cs ToTexture2D() ERROR: " + uwr.error);
 						} else {
 							Texture2D tex = DownloadHandlerTexture.GetContent(uwr);
