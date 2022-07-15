@@ -11,7 +11,7 @@ namespace XVerse.Player.Input
     /// <summary>
     /// XInput is Input Manager which is Singleton ScriptableObject
     /// </summary>
-    public sealed class XInput : ScriptableObject
+    public class XInput : ScriptableObject
     {
         private const string SettingFileDirectory = "Assets/Resources";
         private const string SettingFilePath = "Assets/Resources/XInput.asset";
@@ -52,8 +52,6 @@ namespace XVerse.Player.Input
                     if (_instance == null)
                     {
                         _instance = CreateInstance<XInput>();
-                        /*_instance.PlayerInputSetting = ScriptableObject.CreateInstance<InputSetting.InputSetting>();
-                        AssetDatabase.AddObjectToAsset(_instance.PlayerInputSetting, SettingFilePath);*/
                         AssetDatabase.CreateAsset(_instance, SettingFilePath);
                         AssetDatabase.ImportAsset(SettingFilePath);
                         _instance.PlayerInputSettings = new List<InputSetting>();

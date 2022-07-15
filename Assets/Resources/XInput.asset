@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfd054ccbeb8ac4f97c779123ee609a, type: 3}
   m_Name: XInput
   m_EditorClassIdentifier: 
-  PlayerInputSettings: []
+  PlayerInputSettings:
+  - InputSettingName: New Input Setting (1)
+    KeyboardInputSetting:
+    - InputGroupName: Movement
+      Inputs: []
+    MouseInputSetting: []
   PresentIndex: 0

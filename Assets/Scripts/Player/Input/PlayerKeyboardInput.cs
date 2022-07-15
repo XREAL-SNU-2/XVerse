@@ -20,7 +20,7 @@ namespace XVerse.Player.Input
     }
 
     [Serializable]
-    public sealed class KeyboardInput : PlayerInput
+    public class KeyboardInput : PlayerInput
     {
         public KeyboardInputName InputKeyName;
         public KeyboardInputType InputKeyType;
@@ -85,7 +85,7 @@ namespace XVerse.Player.Input
     }
 
     [Serializable]
-    public sealed class KeyboardInputGroup : PlayerInputGroup<KeyboardInput>
+    public class KeyboardInputGroup : PlayerInputGroup<KeyboardInput>
     {
         public KeyboardInputGroup(string name) : this()
         {

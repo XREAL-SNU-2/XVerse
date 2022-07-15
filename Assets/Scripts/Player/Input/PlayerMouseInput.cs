@@ -15,7 +15,7 @@ namespace XVerse.Player.Input
     }
 
     [Serializable]
-    public sealed class MouseInput : PlayerInput
+    public class MouseInput : PlayerInput
     {
         public MouseInputName InputMouseName;
         public MouseInputType InputMouseType;
@@ -75,7 +75,7 @@ namespace XVerse.Player.Input
     }
 
     [Serializable]
-    public sealed class MouseInputGroup : PlayerInputGroup<MouseInput>
+    public class MouseInputGroup : PlayerInputGroup<MouseInput>
     {
         public MouseInputGroup(string name) : this()
         {

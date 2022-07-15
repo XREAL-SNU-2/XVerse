@@ -4,7 +4,7 @@ using UnityEngine;
 namespace XVerse.Player.Input
 {
     [System.Serializable]
-    public sealed class InputSetting
+    public class InputSetting
     {
         public string InputSettingName;
         public List<KeyboardInputGroup> KeyboardInputSetting;

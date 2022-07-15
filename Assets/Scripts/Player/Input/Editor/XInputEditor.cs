@@ -58,7 +58,15 @@ namespace XVerse.Player.Input
             EditorGUI.EndDisabledGroup();
             GUILayout.Space(5);
             inputSettingList.DoLayoutList();
+
+            serializedObject.Update();
             serializedObject.ApplyModifiedProperties();
+
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(target);
+                AssetDatabase.SaveAssets();
+            }
         }
     }
 }
