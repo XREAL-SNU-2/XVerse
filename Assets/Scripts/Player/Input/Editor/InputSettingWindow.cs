@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using UnityEngine;
 
 namespace XVerse.Player.Input
 {
@@ -169,6 +169,7 @@ namespace XVerse.Player.Input
             index = index < (XInput.Instance[setIndex].KeyboardInputSetting?.Count ?? 0) ? index : XInput.Instance[setIndex].KeyboardInputSetting.Count - 1;
             return index >= 0 ? index : 0;
         }
+
         private int getMouseIndex()
         {
             int index = mouseGroupList.index;

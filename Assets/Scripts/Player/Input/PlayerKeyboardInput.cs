@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace XVerse.Player.Input
 {
@@ -33,10 +33,13 @@ namespace XVerse.Player.Input
                 {
                     case KeyboardInputType.Key:
                         return isActiveInput && UnityEngine.Input.GetKey(ToKeyCode());
+
                     case KeyboardInputType.KeyDown:
                         return isActiveInput && UnityEngine.Input.GetKeyDown(ToKeyCode());
+
                     case KeyboardInputType.KeyUp:
                         return isActiveInput && UnityEngine.Input.GetKeyUp(ToKeyCode());
+
                     default:
                         Debug.LogError("KeyboardInputType Error");
                         return false;
@@ -114,5 +117,4 @@ namespace XVerse.Player.Input
             InputGroupName = keyboardGroup.InputGroupName;
         }
     }
-
 }

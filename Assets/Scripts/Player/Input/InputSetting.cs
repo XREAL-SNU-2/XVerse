@@ -16,6 +16,7 @@ namespace XVerse.Player.Input
             KeyboardInputSetting = keySets;
             MouseInputSetting = mouseSets;
         }
+
         public InputSetting()
         {
             KeyboardInputSetting = new List<KeyboardInputGroup>();
@@ -175,7 +176,6 @@ namespace XVerse.Player.Input
                 t.InputLockAll();
             }
         }
-
 
         public static InputSetting XtownLobbyInputSettingGroup
         {

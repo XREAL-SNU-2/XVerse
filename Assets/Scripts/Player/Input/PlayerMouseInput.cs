@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace XVerse.Player.Input
 {
@@ -28,12 +28,16 @@ namespace XVerse.Player.Input
                 {
                     case MouseInputType.Mouse:
                         return isActiveInput && UnityEngine.Input.GetMouseButton((int)InputMouseName);
+
                     case MouseInputType.MouseUp:
                         return isActiveInput && UnityEngine.Input.GetMouseButtonUp((int)InputMouseName);
+
                     case MouseInputType.MouseDown:
                         return isActiveInput && UnityEngine.Input.GetMouseButtonDown((int)InputMouseName);
+
                     case MouseInputType.Drag:
                         return isActiveInput;
+
                     default:
                         Debug.LogError("MouseInputType Error");
                         return false;
@@ -71,7 +75,6 @@ namespace XVerse.Player.Input
             InputMouseName = mouse.InputMouseName;
             InputMouseType = mouse.InputMouseType;
         }
-
     }
 
     [Serializable]
@@ -103,6 +106,5 @@ namespace XVerse.Player.Input
             }
             InputGroupName = mouseGroup.InputGroupName;
         }
-
     }
 }

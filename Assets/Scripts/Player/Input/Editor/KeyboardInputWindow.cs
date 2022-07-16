@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using UnityEditor;
-
+using UnityEngine;
 
 namespace XVerse.Player.Input
 {
@@ -143,7 +141,6 @@ namespace XVerse.Player.Input
                             this.Close();
                         }
                     }
-
                 }
             }
         }

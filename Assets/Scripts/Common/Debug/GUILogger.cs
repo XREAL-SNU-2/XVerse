@@ -1,24 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GUILayout;
 
 public class GUILogger : MonoBehaviour
 {
+    private static GUILogger _logger;
 
-    static GUILogger _logger;
     public static GUILogger Logger
     {
         get => _logger;
     }
 
-
-    void Awake()
+    private void Awake()
     {
         if (_logger == null)
         {
             _logger = this;
-
         }
         else if (_logger != this)
         {
@@ -31,9 +27,8 @@ public class GUILogger : MonoBehaviour
     public Vector2 scrollPosition;
     public string message = "Debugger enabled";
 
-    void OnGUI()
+    private void OnGUI()
     {
-
         using (var scrollViewScope = new ScrollViewScope(scrollPosition, GUILayout.Width(400), GUILayout.Height(400)))
         {
             scrollPosition = scrollViewScope.scrollPosition;
@@ -55,5 +50,4 @@ public class GUILogger : MonoBehaviour
         string newstr = "<color=black>" + str + "</color>";
         Log(newstr);
     }
-
 }

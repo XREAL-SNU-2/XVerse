@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Xverse.Scene;
 
 public class PersonalWorldScene : BaseScene
@@ -11,8 +7,8 @@ public class PersonalWorldScene : BaseScene
         base.Init();
         SceneType = Xverse.Scene.Scene.PersonalWorld;
     }
+
     public override void Clear()
     {
-
     }
 }

@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
-
+using System.Collections;
+using UnityEngine;
 using XVerse.Player.Input;
 
 namespace XVerse.Player.Control
 {
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]
-    //[RequireComponent(typeof(NetworkTransform))]
     public class PlayerController : MonoBehaviour //NetworkBehaviour
     {
         private const float SPEED_MIN = 2f;
@@ -27,17 +24,19 @@ namespace XVerse.Player.Control
 
         [Header("PlayerBody")]
 
-
         [Header("Movement Settings")]
         [Range(SPEED_MIN, SPEED_MAX)]
         public float WalkSpeed = 4f;
+
         [Range(SPEED_MIN, SPEED_MAX)]
         public float RunSpeed = 7f;
+
         public float JumpForce = 3f;
         public float TurnSensitivity = 5f;
 
         [Header("Diagnostics")]
         public STATE State = STATE.NONE;
+
         public bool IsGrounded = true;
         public bool CanJump = true;
         public float MoveSpeed;
@@ -91,7 +90,6 @@ namespace XVerse.Player.Control
             {
                 State = STATE.FLOAT;
             }
-
         }
 
         private void FixedUpdate()
@@ -143,6 +141,5 @@ namespace XVerse.Player.Control
             yield return new WaitForSeconds(JUMP_DELAY);
             CanJump = true;
         }
-
     }
 }

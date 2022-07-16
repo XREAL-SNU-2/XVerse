@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace XVerse.Player.Input
 {
@@ -9,10 +9,15 @@ namespace XVerse.Player.Input
         public string InputName;
         protected bool isActiveInput;
         public Action InputAction;
-        public void InputLock() { isActiveInput = false; }
-        public void InputUnLock() { isActiveInput = true; }
 
-        public PlayerInput() { }
+        public void InputLock()
+        { isActiveInput = false; }
+
+        public void InputUnLock()
+        { isActiveInput = true; }
+
+        public PlayerInput()
+        { }
     }
 
     [Serializable]
@@ -38,6 +43,7 @@ namespace XVerse.Player.Input
                 else input.InputLock();
             }
         }
+
         public void InputLockOnly(string inputName)
         {
             foreach (T input in Inputs)
@@ -46,6 +52,7 @@ namespace XVerse.Player.Input
                 else input.InputUnLock();
             }
         }
+
         public void InputLockAll()
         {
             foreach (T input in Inputs)
@@ -53,6 +60,7 @@ namespace XVerse.Player.Input
                 input.InputLock();
             }
         }
+
         public void InputUnLockAll()
         {
             foreach (T input in Inputs)
@@ -60,6 +68,5 @@ namespace XVerse.Player.Input
                 input.InputUnLock();
             }
         }
-
     }
 }

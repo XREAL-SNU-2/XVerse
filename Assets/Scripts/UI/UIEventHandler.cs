@@ -8,10 +8,10 @@ namespace XReal.XTown.UI
     {
         // define events to attach callbacks to.
         public Action<PointerEventData> OnEnterHandler = null;
+
         public Action<PointerEventData> OnClickHandler = null;
         public Action<PointerEventData> OnExitHandler = null;
         public Action<PointerEventData> OnDragHandler = null;
-
 
         //pointer events invocation.
         public void OnDrag(PointerEventData eventData)

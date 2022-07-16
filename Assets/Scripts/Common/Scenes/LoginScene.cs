@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Xverse.Scene;
 
 public class LoginScene : BaseScene
@@ -11,8 +7,8 @@ public class LoginScene : BaseScene
         base.Init();
         SceneType = Xverse.Scene.Scene.Login;
     }
+
     public override void Clear()
     {
-
     }
 }

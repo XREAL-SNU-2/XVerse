@@ -1,18 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace XReal.XTown.UI {
 
-
+namespace XReal.XTown.UI
+{
     public class UIManager : MonoBehaviour
     {
         // singleton, and UIManager must persist across scenes. right? I guess...
-        static UIManager _UIManager;
+        private static UIManager _UIManager;
+
         public static UIManager UI
         {
             get => _UIManager;
         }
-        void Awake()
+
+        private void Awake()
         {
             if (_UIManager == null)
             {
@@ -27,11 +28,12 @@ namespace XReal.XTown.UI {
         }
 
         // sorting order
-        int _order = 10;
+        private int _order = 10;
 
         // references to the two types of UI.
-        Stack<UIPopup> _popupStack = new Stack<UIPopup>();
-        UIScene _sceneUI = null;
+        private Stack<UIPopup> _popupStack = new Stack<UIPopup>();
+
+        private UIScene _sceneUI = null;
 
         // used for sorting order of UI.
         public GameObject Root
@@ -49,7 +51,7 @@ namespace XReal.XTown.UI {
         public void ShowCanvas(GameObject go, bool sort = true)
         {
             Canvas canvas = go.GetComponent<Canvas>();
-            if(canvas is null)
+            if (canvas is null)
             {
                 Debug.LogError("SetCanvas's first argument requires component canvas but is missing!");
                 return;
@@ -69,13 +71,14 @@ namespace XReal.XTown.UI {
 
         // prefab UI instantiation. path: Resources/UI/(Scene or Popup)/name
         public string UIPathPrefix = "UI/";
+
         // SceneUI: full screen
-        public T ShowSceneUI<T>(string name = null) where T: UIScene
+        public T ShowSceneUI<T>(string name = null) where T : UIScene
         {
             if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
             GameObject go = Instantiate(Resources.Load<GameObject>(UIPathPrefix + $"Scene/{name}"));
             T sceneUI = go.GetComponent<T>();
-            if(sceneUI is null)
+            if (sceneUI is null)
             {
                 Debug.LogError("UIManager/ failed to show canvas: check if script is attached");
                 return null;
@@ -88,12 +91,12 @@ namespace XReal.XTown.UI {
         }
 
         // popup UIs. They need closing methods as well.
-        public T ShowPopupUI<T>(string name = null) where T: UIPopup
+        public T ShowPopupUI<T>(string name = null) where T : UIPopup
         {
             if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
             GameObject go = Instantiate(Resources.Load<GameObject>(UIPathPrefix + $"Popup/{name}"));
             T popup = go.GetComponent<T>();
-            if(popup is null)
+            if (popup is null)
             {
                 Debug.LogError("UIManager/ failed to open popup: check if script is attached.");
                 return null;
@@ -112,7 +115,7 @@ namespace XReal.XTown.UI {
             if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
 
             GameObject go = Instantiate(Resources.Load<GameObject>(UIPathPrefix + $"SubItem/{name}"));
-            
+
             if (parent is null)
             {
                 Debug.LogError("UIManager/ failed to open subitem: check if script is attached.");
@@ -131,12 +134,11 @@ namespace XReal.XTown.UI {
             _order--;
         }
 
-
         // safety: specify popup to close
         public void ClosePopupUI(UIPopup popup)
         {
             if (_popupStack.Count == 0) return;
-            if(_popupStack.Peek() != popup)
+            if (_popupStack.Peek() != popup)
             {
                 Debug.LogError("UIManager/ Close popup failed!");
                 return;
@@ -144,13 +146,10 @@ namespace XReal.XTown.UI {
             ClosePopupUI();
         }
 
-
         // close all
         public void CloseAllPopupUI()
         {
             while (_popupStack.Count > 0) ClosePopupUI();
         }
     }
-
-    
 }

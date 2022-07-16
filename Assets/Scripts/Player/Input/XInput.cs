@@ -1,9 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_EDITOR 
+#if UNITY_EDITOR
+
 using UnityEditor;
+
 #endif
 
 namespace XVerse.Player.Input
@@ -18,6 +19,7 @@ namespace XVerse.Player.Input
 
         // lazy initialize singleton
         private static XInput _instance;
+
         /// <summary> XInput Singleton Instance </summary>
         public static XInput Instance
         {
@@ -68,6 +70,7 @@ namespace XVerse.Player.Input
         /// List of PlayerInputSetting
         /// </summary>
         public List<InputSetting> PlayerInputSettings;
+
         /// <summary>
         /// index of Present PlayerInputSetting
         /// </summary>
@@ -112,7 +115,6 @@ namespace XVerse.Player.Input
             if (isValid) { this[PresentIndex].InputUnLockAll(); }
             else { Debug.LogError($"Input Setting with name {name} doesn't exist."); }
         }
-
 
         private KeyboardInput GetKey(string name)
         {

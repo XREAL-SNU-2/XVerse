@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Xverse.Scene
-{ 
+{
     public enum Scene
     {
-    Default,
-    Login,
-    PersonalWorld,
-    OpenSpace,
+        Default,
+        Login,
+        PersonalWorld,
+        OpenSpace,
     }
+
     public abstract class BaseScene : MonoBehaviour
     {
         public Scene SceneType { get; protected set; } = Scene.Default;
-        void Awake()
+
+        private void Awake()
         {
             Init();
         }

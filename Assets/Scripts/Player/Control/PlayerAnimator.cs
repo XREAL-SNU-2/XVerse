@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace XVerse.Player.Control
@@ -12,7 +10,5 @@ namespace XVerse.Player.Control
         private PlayerController playerController;
 
         private Animator animator;
-
-        
     }
 }

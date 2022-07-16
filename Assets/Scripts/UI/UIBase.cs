@@ -1,16 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 // all UI canvases should derive from this.
 namespace XReal.XTown.UI
 {
     public abstract class UIBase : MonoBehaviour
     {
-
         // storage for UIelements, type refers to enum
         protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+
         public abstract void Init();
 
         // T must contain an enum definition for UI element names.
@@ -36,7 +36,7 @@ namespace XReal.XTown.UI
         // idx is usually an ENUM casted to int. don't worry about memorizing numbers..
         // T is UIStuff,, like Button,Image,, etc.
         // similar to GetComponent, except we give extra search ENUM idx.
-        protected T GetUIComponent<T>(int idx) where T: UnityEngine.Object
+        protected T GetUIComponent<T>(int idx) where T : UnityEngine.Object
         {
             UnityEngine.Object[] objects = null;
             if (!_objects.TryGetValue(typeof(T), out objects))
@@ -52,7 +52,7 @@ namespace XReal.XTown.UI
         public static void BindEvent(GameObject go, Action<PointerEventData> action, UIEvents.UIEvent type = UIEvents.UIEvent.Click)
         {
             UIEventHandler evt = go.GetComponent<UIEventHandler>();
-            if(evt is null)
+            if (evt is null)
             {
                 Debug.Log("<color = red> Deprecation warning: XReal UI convention requires you to attach UIEventHandler script to " +
                     "interactable UI elements. But we will attach it for you for now. </color>");
@@ -65,14 +65,17 @@ namespace XReal.XTown.UI
                     evt.OnEnterHandler -= action;
                     evt.OnEnterHandler += action;
                     break;
+
                 case UIEvents.UIEvent.Click:
                     evt.OnClickHandler -= action;
                     evt.OnClickHandler += action;
                     break;
+
                 case UIEvents.UIEvent.Exit:
                     evt.OnExitHandler -= action;
                     evt.OnExitHandler += action;
                     break;
+
                 case UIEvents.UIEvent.Drag:
                     evt.OnDragHandler -= action;
                     evt.OnDragHandler += action;
@@ -80,6 +83,4 @@ namespace XReal.XTown.UI
             }
         }
     }
-
 }
-

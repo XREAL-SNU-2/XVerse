@@ -1,11 +1,10 @@
 using System;
-using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using UnityEngine;
 
 namespace XVerse.Player.Input
 {
-
     [CustomEditor(typeof(XInput))]
     public class XInputEditor : Editor
     {

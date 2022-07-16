@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace XReal.XTown.UI
 {
     public class UIUtils
@@ -8,7 +7,7 @@ namespace XReal.XTown.UI
         /// <summary>
         /// utility for searching through UI element's hierarchy.
         /// </summary>
-        
+
         // serach for component T(ex. Button, Image, Toggle..) in go with name UIname
         public static T FindUIChild<T>(GameObject go, string UIname = null, bool searchGrandChildren = false) where T : UnityEngine.Object
         {
@@ -40,7 +39,6 @@ namespace XReal.XTown.UI
             return null;
         }
 
-
         // search for gameObject, not attached component T of it.
         public static GameObject FindUIChild(GameObject go, string name = null, bool searchGrandChildren = false)
         {
@@ -58,5 +56,3 @@ namespace XReal.XTown.UI
         }
     }
 }
-
-
