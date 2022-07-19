@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Xverse.Scene;
 
 public class OpenSpaceScene : BaseScene
@@ -10,6 +9,8 @@ public class OpenSpaceScene : BaseScene
     {
         base.Init();
         SceneType = Xverse.Scene.Scene.OpenSpace;
+        //Debug.Log(SceneManagerEx.Instance.CurrentScene.name);
+        //Debug.Log(SceneManagerEx.Instance.PrevScene.ToString());
     }
     public override void Clear()
     {
