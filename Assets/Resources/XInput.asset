@@ -13,9 +13,27 @@ MonoBehaviour:
   m_Name: XInput
   m_EditorClassIdentifier: 
   PlayerInputSettings:
-  - InputSettingName: New Input Setting (1)
+  - InputSettingName: XVerse Default
     KeyboardInputSetting:
     - InputGroupName: Movement
-      Inputs: []
+      Inputs:
+      - InputName: Front
+        InputKeyName: 16
+        InputKeyType: 1
+      - InputName: Left
+        InputKeyName: 29
+        InputKeyType: 1
+      - InputName: Back
+        InputKeyName: 30
+        InputKeyType: 1
+      - InputName: Right
+        InputKeyName: 31
+        InputKeyType: 1
+      - InputName: Jump
+        InputKeyName: 55
+        InputKeyType: 1
+      - InputName: Run
+        InputKeyName: 41
+        InputKeyType: 1
     MouseInputSetting: []
   PresentIndex: 0
