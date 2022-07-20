@@ -8,51 +8,25 @@ using XVerse.Player.Input;
 
 namespace XVerse.Player.Control
 {
+
     // Below is script for Single Play version without Mirror Network.
     public class PlayerCameraControllerV1 : MonoBehaviour
     {
         [Header("Camera")]
-        [SerializeField] private Vector2 maxFollowOffset = new Vector2(-1f, 6f);
+        [SerializeField] private float maxCameraRadius = 4f;
         [SerializeField] private Vector2 cameraVelocity = new Vector2(20f, 5f);
         [SerializeField] private Transform playerTransform = null;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
+        [SerializeField] private CinemachineFreeLook virtualCamera = null;
 
-        private Controls controls;
-        private Controls Controls
+        private void Awake()
         {
-            get
-            {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
-            }
-        }
-        private CinemachineTransposer transposer;
-
-
-
-        void Awake()
-        {
+            virtualCamera.m_XAxis.m_MaxSpeed *= cameraVelocity.x;
+            virtualCamera.m_YAxis.m_MaxSpeed *= cameraVelocity.y;
+            virtualCamera.m_Orbits[0].m_Radius = maxCameraRadius;
+            virtualCamera.m_Orbits[1].m_Radius = maxCameraRadius;
+            virtualCamera.m_Orbits[2].m_Radius = maxCameraRadius;
             virtualCamera.m_Follow = playerTransform;
             virtualCamera.m_LookAt = playerTransform;
-            transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-            Controls.Player.Look.performed += ctx => Look(ctx.ReadValue<Vector2>());
-        }
-
-        private void OnEnable() => Controls.Enable();
-        private void OnDisable() => Controls.Disable();
-
-        private void Look(Vector2 lookAxis)
-        {
-            float deltaTime = Time.deltaTime;
-
-            float followOffset = Mathf.Clamp(
-                transposer.m_FollowOffset.y - (lookAxis.y * cameraVelocity.y * deltaTime),
-                maxFollowOffset.x,
-                maxFollowOffset.y);
-
-            transposer.m_FollowOffset.y = followOffset;
-
-            playerTransform.Rotate(0f, lookAxis.x * cameraVelocity.x * deltaTime, 0f);
         }
     }
 
@@ -61,49 +35,23 @@ namespace XVerse.Player.Control
     public class PlayerCameraControllerV1 : NetworkBehaviour
     {
         [Header("Camera")]
-        [SerializeField] private Vector2 maxFollowOffset = new Vector2(-1f, 6f);
+        [SerializeField] private float maxCameraRadius = 4f;
         [SerializeField] private Vector2 cameraVelocity = new Vector2(20f, 5f);
         [SerializeField] private Transform playerTransform= null;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
+        
+        private CinemachineFreeLook virtualCamera;
 
-        private Controls controls;
-        private Controls Controls
+        private void OnStartAuthority()
         {
-            get
-            {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
-            }
-        }
-        private CinemachineTransposer transposer;
-
-        public override void OnStartAuthority()
-        {
-            virtualCamera.m_Follow = playerTransform;
-            virtualCamera.m_LookAt = playerTransform;
-            transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
             virtualCamera.gameObject.SetActive(true);
             enabled = true;
-
-            Controls.Player.Look.performed += ctx => Look(ctx.ReadValue<Vector2>());
-        }
-
-        [ClientCallback]
-        private void OnEnable() => Controls.Enable();
-        private void OnDisable() => Controls.Disable();
-
-        private void Look(Vector2 lookAxis)
-        {
-            float deltaTime = Time.deltaTime;
-
-            float followOffset = Mathf.Clamp(
-                transposer.m_FollowOffset.y - (lookAxis.y * cameraVelocity.y * deltaTime),
-                maxFollowOffset.x,
-                maxFollowOffset.y);
-
-            transposer.m_FollowOffset.y = followOffset;
-
-            playerTransform.Rotate(0f, lookAxis.x * cameraVelocity.x * deltaTime, 0f);
+            virtualCamera.m_XAxis.m_MaxSpeed *= cameraVelocity.x;
+            virtualCamera.m_YAxis.m_MaxSpeed *= cameraVelocity.y;
+            virtualCamera.m_Orbits[0].m_Radius = maxCameraRadius;
+            virtualCamera.m_Orbits[1].m_Radius = maxCameraRadius;
+            virtualCamera.m_Orbits[2].m_Radius = maxCameraRadius;
+            virtualCamera.m_Follow = playerTransform;
+            virtualCamera.m_LookAt = playerTransform;
         }
     }
     */
