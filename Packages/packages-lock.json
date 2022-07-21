@@ -250,6 +250,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.xreal.xui": {
+      "version": "https://github.com/sk7725/XVerseUI.git?path=/Packages/XVerseUI",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.6"
+      },
+      "hash": "c45e13eeb141fa6e7b07e191e6edd5b3eb10444c"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
