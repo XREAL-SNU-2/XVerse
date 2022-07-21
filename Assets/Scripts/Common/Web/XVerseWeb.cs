@@ -114,7 +114,16 @@ public class XVerseWeb
         return null;
     }
 
-
+    /// <summary>
+    /// signs the request with the firebase token.
+    /// </summary>
+    /// <param name="URL"></param>
+    /// <param name="type"></param>
+    /// <param name="token">this parameter is cached under XVerseFirebase.Instance.UserToken</param>
+    /// <param name="successHandler"></param>
+    /// <param name="failHandler"></param>
+    /// <param name="formData">for POST request, write param1, value1, param2, value2, ... </param>
+    /// <returns></returns>
     public static IEnumerator MakeSignedWebRequest(string URL, XVerseRequestTypes type, string token,
         Action<ResponseData> successHandler, Action<FailResponseData> failHandler = null, params string[] formData)
     {

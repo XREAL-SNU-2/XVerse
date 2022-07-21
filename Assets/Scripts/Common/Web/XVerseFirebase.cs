@@ -22,7 +22,18 @@ public class XVerseFirebase : MonoBehaviour
 
     //cache token
     private string token;
-
+    public string UserToken
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(token)) return token;
+            else
+            {
+                Debug.LogError("you must refresh the token first");
+                return null;
+            }
+        }
+    }
     private FirebaseAuth auth;
     private FirebaseUser user;
 
