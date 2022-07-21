@@ -115,19 +115,17 @@ public class XVerseWeb
     }
 
 
-    public static IEnumerator MakeSignedWebRequest(string URL, XVerseRequestTypes type,
+    public static IEnumerator MakeSignedWebRequest(string URL, XVerseRequestTypes type, string token,
         Action<ResponseData> successHandler, Action<FailResponseData> failHandler = null, params string[] formData)
     {
-        Task<string> getTokenTask = XVerseFirebase.Instance.GetUserToken();
-        getTokenTask.RunSynchronously();
+        
 
         switch (type)
         {
             case XVerseRequestTypes.GET:
                 using (UnityWebRequest request = UnityWebRequest.Get(URL))
                 {
-                    request.SetRequestHeader("FIREBASE_TOKEN", getTokenTask.Result);
-                    Debug.Log(request.GetRequestHeader("FIREBASE_TOKEN"));
+                    request.SetRequestHeader("FIREBASE_TOKEN", token);
                     yield return request.SendWebRequest();
                     // process result
                     if (request.result == UnityWebRequest.Result.Success)
@@ -157,6 +155,8 @@ public class XVerseWeb
                 WWWForm form = ParseFormParameters(formData);
                 using (UnityWebRequest request = UnityWebRequest.Post(URL, form))
                 {
+                    request.SetRequestHeader("FIREBASE_TOKEN", token);
+
                     yield return request.SendWebRequest();
 
                     // process result
@@ -205,15 +205,16 @@ public class XVerseWeb
     /// <param name="successHandler"></param>
     /// <param name="failHandler"></param>
     /// <param name="timeOut"> in milliseconds, cancel request if no response for this amount of time.</param>
-    public static void GetWebRequestLocal(string URL,
-        Action<ResponseData> successHandler, Action<FailResponseData> failHandler = null, int timeOut = 30 * 1000)
+    public static void GetSignedWebRequestLocal(string URL, string token,
+        Action<ResponseData> successHandler, Action<FailResponseData> failHandler = null)
     {
         try
         {
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL);
             request.Method = "GET";
-            request.Timeout = 30 * 1000;
-
+            request.Timeout = 10 * 1000;
+            request.Headers.Add("FIREBASE_TOKEN", token);
+            Debug.Log("sent request to " + request.Address);
             using (HttpWebResponse resp = (HttpWebResponse)request.GetResponse())
             {
                 HttpStatusCode status = resp.StatusCode;
@@ -248,15 +249,8 @@ public class XVerseWeb
         }
     }
 
-    public static void Start()
-    {
-        string token = XVerseFirebase.Instance.GetUserToken().Result;
-        Debug.Log("token: " + token);
 
-        
-    }
-
-    public const string XVerseServiceEndPoint = "http://ec2-13-209-4-26.ap-northeast-2.compute.amazonaws.com:3000";
+    public const string XVerseServiceEndPoint = "http://ec2-3-39-192-103.ap-northeast-2.compute.amazonaws.com";
 }
 
 public class ResponseData

@@ -2,8 +2,11 @@ using Firebase;
 using Firebase.Auth;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class XVerseFirebase : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class XVerseFirebase : MonoBehaviour
     public string Email;
     public string Pass;
 
+    //cache token
+    private string token;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -74,28 +79,29 @@ public class XVerseFirebase : MonoBehaviour
         }
     }
 
-    private string registerOutputText = "see outputs here";
 
     private void OnGUI()
     {
-        GUI.Label(new Rect(150, 50, 300, 50), registerOutputText);
+        //test code
         if (GUI.Button(new Rect(20, 20, 100, 20), "register")) StartCoroutine(RegisterLogic(Username, Email, Pass));
-        if (GUI.Button(new Rect(20, 45, 100, 20), "signOut")) StartCoroutine("SignOut");
+        if (GUI.Button(new Rect(20, 45, 100, 20), "send")) StartCoroutine(XVerseWeb.MakeSignedWebRequest(
+            XVerseWeb.XVerseServiceEndPoint + "/auth", XVerseWeb.XVerseRequestTypes.GET, token,
+            (res) => Debug.Log(res.ResponseString),
+            (fail) => Debug.LogWarning(fail.Message)
+        ));
         if (GUI.Button(new Rect(20, 70, 100, 20), "signIn")) StartCoroutine(LoginLogic(Email, Pass));
-        if (GUI.Button(new Rect(20, 95, 100, 30), "GET KEY"))
-        {
-            XVerseWeb.Start();
-        }
+        if (GUI.Button(new Rect(20, 95, 100, 30), "refresh token")) RefreshUserToken().ContinueWith((task) => {
+            Debug.Log("refreshed token");
+            token = task.Result;
+        });
     }
-    
-    public async Task<string> GetUserToken()
+
+
+    public async Task<string> RefreshUserToken()
     {
-        Debug.Log("entered GetUserToken");
 
         FirebaseUser user = auth.CurrentUser;
-        await Task.Delay(2000);
         string result = await user.TokenAsync(true);
-        Debug.Log("exiting GetUserToken");
 
         return result;
     }
@@ -139,7 +145,6 @@ public class XVerseFirebase : MonoBehaviour
                     output = "Account Does Not Exist";
                     break;
             }
-            registerOutputText = output;
         }
         else
         {
@@ -150,7 +155,7 @@ public class XVerseFirebase : MonoBehaviour
     #region REGISTER
     private IEnumerator RegisterLogic(string username, string email, string password)
     {
-        if (username == "") { registerOutputText = "Please Enter A Username"; }
+        if (username == "") { Debug.LogError("Please Enter A Username"); }
         else
         {
             var registerTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
@@ -181,7 +186,6 @@ public class XVerseFirebase : MonoBehaviour
                         output = "Please Enter Your Password";
                         break;
                 }
-                registerOutputText = output;
             }
             else
             {
@@ -212,7 +216,6 @@ public class XVerseFirebase : MonoBehaviour
                             break;
 
                     }
-                    registerOutputText = output;
                 }
                 else
                 {
