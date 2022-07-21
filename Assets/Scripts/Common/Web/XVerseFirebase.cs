@@ -67,7 +67,6 @@ public class XVerseFirebase : MonoBehaviour
     private void InitializeFirebase()
     {
         auth = FirebaseAuth.DefaultInstance;
-        //StartCoroutine(CheckAutoLogin());
 
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
@@ -95,20 +94,35 @@ public class XVerseFirebase : MonoBehaviour
     {
         //test code
         if (GUI.Button(new Rect(20, 20, 100, 20), "register")) StartCoroutine(RegisterLogic(Username, Email, Pass));
-        if (GUI.Button(new Rect(20, 45, 100, 20), "send")) StartCoroutine(XVerseWeb.MakeSignedWebRequest(
-            XVerseWeb.XVerseServiceEndPoint + "/auth", XVerseWeb.XVerseRequestTypes.GET, token,
+        if (GUI.Button(new Rect(20, 45, 100, 20), "Ping Server"))
+        {
+            if (string.IsNullOrEmpty(UserToken))
+            {
+                Debug.LogError("you must first refresh the token before sending a web request");
+                return;
+            }
+            StartCoroutine(XVerseWeb.MakeWebRequest(
+            XVerseWeb.XVerseServiceEndPoint + "/auth", XVerseWeb.XVerseRequestTypes.GET, 
             (res) => Debug.Log(res.ResponseString),
-            (fail) => Debug.LogWarning(fail.Message)
+            (fail) => Debug.LogWarning(fail.Message),
+            UserToken
         ));
+        }
         if (GUI.Button(new Rect(20, 70, 100, 20), "signIn")) StartCoroutine(LoginLogic(Email, Pass));
-        if (GUI.Button(new Rect(20, 95, 100, 30), "refresh token")) RefreshUserToken().ContinueWith((task) => {
+        if (GUI.Button(new Rect(20, 95, 100, 30), "refresh token")) RefreshToken();
+    }
+
+    // this sets the token cache field by fetching the firebase token.
+    // should be called whenever first logged in or auth info has changed.
+    public void RefreshToken()
+    {
+        GetUserToken().ContinueWith((task) => {
             Debug.Log("refreshed token");
             token = task.Result;
         });
     }
 
-
-    public async Task<string> RefreshUserToken()
+    public async Task<string> GetUserToken()
     {
 
         FirebaseUser user = auth.CurrentUser;
