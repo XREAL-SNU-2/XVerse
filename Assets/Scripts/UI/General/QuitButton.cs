@@ -7,19 +7,17 @@ public class QuitButton : MonoBehaviour
 {
     void Start()
     {
-
-    }
-
-    void Update()
-    {
-
+        GetComponent<XButton>().Clicked(() =>
+        {
+            Application.Quit();
+        });
     }
 
 #if UNITY_EDITOR
-    void Build(Canvas main)
+    public void Build(Canvas main)
     {
         XButton b = XButton.New("Quit", null);
-        b.Get().Size(200f, 60f).Left().Down().SetScene(main);
+        b.Get().Size(200f, 40f).Left().Down().SetScene(main);
         b.gameObject.AddComponent<QuitButton>();
     }
 #endif
